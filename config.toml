@@ -2,7 +2,7 @@
 baseURL = "https://justinesportfolio.netlify.app/"
 languageCode = "en-us"
 title = "Justine's portfolio website"
-theme = "forty"
+theme = "https://github.com/kishaningithub/hugo-creative-portfolio-theme.git"
 
 # Enter your tracking code to enable Google Analytics
 googleAnalytics = ""
@@ -38,7 +38,7 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Justine Veyrenc"
-    subtitle = "Data analytics for finance"
+    subtitle = "Data analytics for finance class project"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -68,7 +68,7 @@ disqusShortname = ""
 
     # Button Style 1
     [[params.navigation.button1]]
-      name = "Get Started"
+      name = "Explore"
       url = "blogs"
 
     # Button Style 2
@@ -81,9 +81,9 @@ disqusShortname = ""
   [params.banner]
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
-    title = "Hi, my name is Forty"
+    title = "Welcome to my data analytics adventure"
     subtitle = "A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP\nAND RELEASED UNDER THE CREATIVE COMMONS."
-    buttonText = "Get Started"
+    buttonText = "Explore"
 
 
   # Tiles Section
@@ -92,15 +92,15 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Aliquam"
-      subtitle = "Ipsum Dolor Sit Amet"
-      image = "pic01.jpg"
+      title = "Social media"
+      subtitle = "...and its worryingly increasing usage"
+      image = "social media.jpg"
       url = "blogs/aliquam"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic02.jpg"
+      title = "Teenage health"
+      subtitle = "...and the impact of weekly habits"
+      image = "Exercise.jpg"
       url = "blogs/tempus"
 
     [[params.tiles.showcase]]
@@ -115,17 +115,17 @@ disqusShortname = ""
       image = "pic04.jpg"
       url = "blogs/ipsum"
 
-    [[params.tiles.showcase]]
-      title = "Consequat"
-      subtitle = "Ipsum Dolor Sit Amet"
-      image = "pic05.jpg"
-      url = "blogs/ipsum"
+    #[[params.tiles.showcase]]
+      #title = "Consequat"
+      #subtitle = "Ipsum Dolor Sit Amet"
+      #image = "pic05.jpg"
+     # url = "blogs/ipsum"
 
-    [[params.tiles.showcase]]
-      title = "Etiam"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic06.jpg"
-      url = "blogs/ipsum"
+    #[[params.tiles.showcase]]
+      #title = "Etiam"
+      #subtitle = "Feugiat Amet Tempus"
+      #image = "pic06.jpg"
+      #url = "blogs/ipsum"
     # You can make more showcases by copy and pasting the code above
 
   [params.blog]
@@ -138,13 +138,10 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "Massa libero"
-    subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Mauris aliquet magna magna sed nunc rhoncus pharetra. 
-    Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. 
-    Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero.
-    Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus."""
-    buttonText = "Get Started"
+    title = "About this website"
+    #subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
+    Before its planned transformation to a recipe website in 2030, this portfolio showcases my talent in coding different data analyses.
+    buttonText = "Explore"
     url = "blogs"
 
 
@@ -165,7 +162,7 @@ disqusShortname = ""
     # - send a dummy email yourself to confirm your account
     # - click the confirm link in the email from www.formspree.io
     # - you're done. Happy mailing!
-    # formEmail = "example@domain.com"
+    formEmail = "jveyrenc.mfa2021@london.edu"
 
     # Contact Section
     # You can add multiple emails, phone numbers, or addresses
@@ -178,16 +175,16 @@ disqusShortname = ""
     #title = "Phone"
     #phone = "(000) 000-0000 x1234"
 
-    #[[params.contact.address]]
-    #title = "Address"
+    [[params.contact.address]]
+    title = "Address"
     #street = "Street"
     #city = "City, ST 00000"
-    #country = "Country"
+    country = "Uranus and beyond"
 
   # Footer section
   [params.footer]
     enable = true
-    copyright = "Justine's Portfolios"
+    copyright = "Justine's Portfolio"
 
     # Uses font awesome icons
    # [[params.footer.social]]
