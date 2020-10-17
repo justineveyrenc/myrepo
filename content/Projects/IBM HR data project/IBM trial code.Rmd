@@ -1,0 +1,162 @@
+---
+title: "Project IBM trial"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: show
+---
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+
+install.packages("formattable")
+install.packages("data.table")
+
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(rvest)    # scrape websites
+library(purrr)  
+library(lubridate) #to handle dates
+library(ggplot2)
+library(ggrepel)
+library(data.table)
+library(dplyr)
+library(formattable)
+library(tidyr)
+```
+
+# On your own: IBM HR Analytics
+
+Loading the data
+
+```{r, loading_hr_dataset}
+
+hr_dataset <- read_csv(here::here("data", "datasets_1067_1925_WA_Fn-UseC_-HR-Employee-Attrition.csv"))
+glimpse(hr_dataset)
+
+```
+
+
+Cleaning the data
+
+```{r, cleaning_hr_dataset}
+
+hr_cleaned <- hr_dataset %>% 
+  clean_names() %>% 
+  mutate(
+    education = case_when(
+      education == 1 ~ "Below College",
+      education == 2 ~ "College",
+      education == 3 ~ "Bachelor",
+      education == 4 ~ "Master",
+      education == 5 ~ "Doctor"
+    ),
+    environment_satisfaction = case_when(
+      environment_satisfaction == 1 ~ "Low",
+      environment_satisfaction == 2 ~ "Medium",
+      environment_satisfaction == 3 ~ "High",
+      environment_satisfaction == 4 ~ "Very High"
+    ),
+    job_satisfaction = case_when(
+      job_satisfaction == 1 ~ "Low",
+      job_satisfaction == 2 ~ "Medium",
+      job_satisfaction == 3 ~ "High",
+      job_satisfaction == 4 ~ "Very High"
+    ),
+    performance_rating = case_when(
+      performance_rating == 1 ~ "Low",
+      performance_rating == 2 ~ "Good",
+      performance_rating == 3 ~ "Excellent",
+      performance_rating == 4 ~ "Outstanding"
+    ),
+    work_life_balance = case_when(
+      work_life_balance == 1 ~ "Bad",
+      work_life_balance == 2 ~ "Good",
+      work_life_balance == 3 ~ "Better",
+      work_life_balance == 4 ~ "Best"
+    )
+  ) %>% 
+  select(age, attrition, daily_rate, department,
+         distance_from_home, education,
+         gender, job_role,environment_satisfaction,
+         job_satisfaction, marital_status,
+         monthly_income, num_companies_worked, percent_salary_hike,
+         performance_rating, total_working_years,
+         work_life_balance, years_at_company,
+         years_since_last_promotion)
+
+```
+
+
+
+1. Attrition Rate of the company:
+
+```{r, attrition_rate}
+
+glimpse(hr_cleaned)
+
+employees_left <- sum(hr_cleaned$attrition == "Yes")
+employees_left
+
+total_employees <- count(hr_cleaned)
+total_employees
+
+attrition_rate <-  employees_left / total_employees * 100.0
+attrition_rate
+
+```
+
+
+
+2. Distribution of various variables:
+
+The age variable seems the closest to normal, with a mean and median value very close to each other.
+
+```{r, distribution_of_vars}
+
+cols <- c('age', 'years_at_company', 'monthly_income', 'years_since_last_promotion')
+statistics <- c('min', 'max', 'mean', 'median', 'sd')
+subset_data <- hr_cleaned[, cols]
+
+
+summary_vals <- subset_data %>% summarise_each(funs(min))
+summary_vals <- append(summary_vals, subset_data %>% summarise_each(funs(max)))
+summary_vals <- append(summary_vals, subset_data %>% summarise_each(funs(mean)))
+summary_vals <- append(summary_vals, subset_data %>% summarise_each(funs(median)))
+summary_vals <- append(summary_vals, subset_data %>% summarise_each(funs(sd)))
+
+summary_matrix <- matrix(summary_vals, nrow = 5, dimnames = list(statistics, cols), byrow = TRUE) 
+  
+knitr::kable(summary_matrix, digits=0, caption="Summary statistics of key variables", align="rrrr", col.names=c("Age","Years at company","Monthly income","Years since last promotion"))
+
+```
