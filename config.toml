@@ -2,7 +2,7 @@
 baseURL = "https://justinesportfolio.netlify.app/"
 languageCode = "en-us"
 title = "Justine's portfolio website"
-theme = "https://github.com/kishaningithub/hugo-creative-portfolio-theme.git"
+theme = "forty"
 
 # Enter your tracking code to enable Google Analytics
 googleAnalytics = ""
