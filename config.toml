@@ -92,10 +92,10 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Social media"
-      subtitle = "...and its worryingly increasing usage"
+      title = "IBM"
+      subtitle = "...and its increasing usage"
       image = "social media.jpg"
-      url = "blogs/aliquam"
+      url = "Projects"
 
     [[params.tiles.showcase]]
       title = "Teenage health"
@@ -139,8 +139,7 @@ disqusShortname = ""
   [params.two]
     enable = true
     title = "About this website"
-    #subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Before its planned transformation to a recipe website in 2030, this portfolio showcases my talent in coding different data analyses.
+    subtitle = "Before its planned transformation to a recipe website in 2030, this portfolio showcases my talent in coding different data analyses." 
     buttonText = "Explore"
     url = "blogs"
 

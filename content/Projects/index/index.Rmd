@@ -31,9 +31,6 @@ knitr::opts_chunk$set(
 
 ```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
 
-install.packages("formattable")
-install.packages("data.table")
-
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
 library(mosaic)
 library(ggthemes)
