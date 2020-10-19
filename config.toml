@@ -38,7 +38,7 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Justine Veyrenc"
-    subtitle = "Data analytics for finance class project"
+    subtitle = "London Business School class project"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -92,7 +92,7 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "IBM"
+      title = "Social media"
       subtitle = "...and its increasing usage"
       image = "social media.jpg"
       url = "Projects"
@@ -101,13 +101,13 @@ disqusShortname = ""
       title = "Teenage health"
       subtitle = "...and the impact of weekly habits"
       image = "Exercise.jpg"
-      url = "blogs/tempus"
+      url = "Projects"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
-      image = "pic03.jpg"
-      url = "blogs/magna"
+      title = "IBM"
+      subtitle = "... and corporate HR data"
+      image = "promotion.jpg"
+      url = "Project 3"
 
     [[params.tiles.showcase]]
       title = "Ipsum"
@@ -170,15 +170,15 @@ disqusShortname = ""
     title = "Email"
     email = "jveyrenc.mfa2021@london.edu"
 
-    #[[params.contact.phone]]
-    #title = "Phone"
-    #phone = "(000) 000-0000 x1234"
+    [[params.contact.phone]]
+    title = "Phone"
+    phone = "0123456789"
 
     [[params.contact.address]]
     title = "Address"
-    #street = "Street"
+    street = "Uranus and beyond"
     #city = "City, ST 00000"
-    country = "Uranus and beyond"
+    #country = 
 
   # Footer section
   [params.footer]
