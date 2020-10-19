@@ -1,19 +1,14 @@
 ---
-title: "Project IBM HR data"
-date: "`r Sys.Date()`"
-description: The hidden corporate data
+categories:
+- ""
+- ""
+date: "2020-10-17"
+description: Corporate
 draft: false
 image: promotion.jpg
 keywords: ""
 slug: Project3
-output:
-  html_document:
-    theme: flatly
-    highlight: zenburn
-    number_sections: yes
-    toc: yes
-    toc_float: yes
-    code_folding: show
+title: "Project IBM HR data"
 ---
 
 

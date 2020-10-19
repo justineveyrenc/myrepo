@@ -49,7 +49,7 @@ disqusShortname = ""
 
     [[params.navigation.links]]
       name = "Projects"
-      url = "blogs"
+      url = "projects"
 
     #[[params.navigation.links]]
       #name = "Generic Blog"
@@ -69,7 +69,7 @@ disqusShortname = ""
     # Button Style 1
     [[params.navigation.button1]]
       name = "Explore"
-      url = "blogs"
+      url = "projects"
 
     # Button Style 2
     [[params.navigation.button2]]
@@ -95,19 +95,19 @@ disqusShortname = ""
       title = "Social media"
       subtitle = "...and its increasing usage"
       image = "social media.jpg"
-      url = "Projects"
+      url = "projects"
 
     [[params.tiles.showcase]]
       title = "Teenage health"
       subtitle = "...and the impact of weekly habits"
       image = "Exercise.jpg"
-      url = "Projects"
+      url = "projects"
 
     [[params.tiles.showcase]]
       title = "IBM"
       subtitle = "... and corporate HR data"
       image = "promotion.jpg"
-      url = "Projects/Project3"
+      url = "projects/project3"
 
     [[params.tiles.showcase]]
       title = "Ipsum"
@@ -141,7 +141,7 @@ disqusShortname = ""
     title = "About this website"
     subtitle = "Before its planned transformation to a recipe website in 2030, this portfolio showcases my talent for coding different data analyses." 
     buttonText = "Explore"
-    url = "blogs"
+    url = "projects"
 
 
   # Contact section
