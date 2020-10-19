@@ -107,7 +107,7 @@ disqusShortname = ""
       title = "IBM"
       subtitle = "... and corporate HR data"
       image = "promotion.jpg"
-      url = "Project 3"
+      url = "Projects\Project3"
 
     [[params.tiles.showcase]]
       title = "Ipsum"
