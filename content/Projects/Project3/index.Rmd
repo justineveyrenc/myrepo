@@ -1,15 +1,11 @@
 ---
 title: "Project IBM HR data"
-categories:
--""
--""
 date: "`r Sys.Date()`"
 description: The hidden corporate data
 draft: false
 image: promotion.jpg
 keywords: ""
 slug: Project3
-tags = []
 output:
   html_document:
     theme: flatly
