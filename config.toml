@@ -139,7 +139,7 @@ disqusShortname = ""
   [params.two]
     enable = true
     title = "About this website"
-    subtitle = "Before its planned transformation to a recipe website in 2030, this portfolio showcases my talent in coding different data analyses." 
+    subtitle = "Before its planned transformation to a recipe website in 2030, this portfolio showcases my talent for coding different data analyses." 
     buttonText = "Explore"
     url = "blogs"
 
