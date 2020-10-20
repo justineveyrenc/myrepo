@@ -116,4 +116,4 @@ twitter_yes <- gss %>%
 knitr::kable(twitter_yes, digits=3, caption="Summary statistics for a 95% confidence interval", align="cccccc", col.names=c("Mean","Standard deviation","Number of respondents", "Standard Error", "Lower confidence interval", "Upper confidence interval"))
 
 ```
-In this sample of bachelors and graduates, the 95% confidence interval is very close to 0 indicating that it is very likely that respondents will not be using twitter.
+In this sample of bachelors and graduates, the 95% confidence interval is very close to 0 indicating that it is very likely that respondents will not be using twitter. 
