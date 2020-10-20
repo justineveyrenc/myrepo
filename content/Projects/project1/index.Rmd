@@ -1,14 +1,14 @@
 ---
-categories:
-- ""
-- ""
-date: "2020-10-17"
-description: Social_media
-draft: false
-image: social_media.jpg
-keywords: ""
-slug: project1
 title: "Social media survey data"
+date: '2020-10-17'
+description: Social_media
+draft: no
+image: social_media.jpg
+keywords: ''
+slug: project1
+categories:
+- ''
+- ''
 ---
 
 ```{r setup, include=FALSE}

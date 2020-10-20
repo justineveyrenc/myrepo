@@ -1,0 +1,84 @@
+---
+categories:
+- ""
+- ""
+date: "2020-10-17"
+description: SOCIAL
+draft: false
+image: social_media.jpg
+keywords: ""
+slug: Projectx
+title: "Social media survey data"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+library(infer)
+library(ggplot2)
+library(ggrepel)
+```
+
+
+```{r, read_gss_data, cache=TRUE}
+
+gss <- read_csv(here::here("data", "smallgss2016.csv"), 
+                na = c("", "Don't know",
+                       "No answer", "Not applicable"))
+
+glimpse(gss)
+
+```
+
+
+## Instagram, Snapchat and Twitter
+
+Estimating the *population* proportion of Snapchat or Instagram users in 2016:
+
+1. I first create a  new variable, `snap_insta` that is *Yes* if the respondent reported using any of Snapchat (`snapchat`) or Instagram (`instagrm`), and *No* if not. If the recorded value was NA for both of these questions, the value in this new variable is also NA.
+
+```{r, hours_spent_on_email_weekly}
+gss <- gss %>% mutate(snap_insta = case_when(
+  snapchat=="Yes"|instagrm=="Yes"~"Yes",
+  snapchat=="No"|instagrm=="No"~"No",
+  TRUE~"NA"))
+
+```
+
+2. I calculate the proportion of those who use either snapchat or instragram in the sample.
+
+```{r, snap_insta_proportion}
+
+gss_snap_insta_cleaned <- gss %>%
+  filter(snap_insta %in% c("Yes", "No")) %>% 
+  mutate(snap_insta_val = ifelse(snap_insta == "Yes", 1, 0))
+
+snap_insta_prop <-  gss_snap_insta_cleaned %>%
+  summarise(proportion=prop(snap_insta_val, success = 1))
+
+knitr::kable(snap_insta_prop, col.names=c("Proportion of respondents using both snap and insta"))
+```
