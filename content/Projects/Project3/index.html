@@ -8,14 +8,14 @@ draft: false
 image: promotion.jpg
 keywords: ""
 slug: Project3
-title: "Project IBM HR data"
+title: "IBM HR data"
 ---
 
 
 
-<div id="on-your-own-ibm-hr-analytics" class="section level1">
-<h1>On your own: IBM HR Analytics</h1>
-<p>Loading the data</p>
+<div id="ibm-hr-analytics" class="section level1">
+<h1>IBM HR Analytics</h1>
+<p>Loading the data…</p>
 <pre class="r"><code>hr_dataset &lt;- read_csv(here::here(&quot;data&quot;, &quot;datasets_1067_1925_WA_Fn-UseC_-HR-Employee-Attrition.csv&quot;))
 glimpse(hr_dataset)</code></pre>
 <pre><code>## Rows: 1,470
@@ -55,7 +55,7 @@ glimpse(hr_dataset)</code></pre>
 ## $ YearsInCurrentRole       &lt;dbl&gt; 4, 7, 0, 7, 2, 7, 0, 0, 7, 7, 4, 5, 2, 2, ...
 ## $ YearsSinceLastPromotion  &lt;dbl&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, 1, ...
 ## $ YearsWithCurrManager     &lt;dbl&gt; 5, 7, 0, 0, 2, 6, 0, 0, 8, 7, 3, 8, 3, 2, ...</code></pre>
-<p>Cleaning the data</p>
+<p>Cleaning the data…</p>
 <pre class="r"><code>hr_cleaned &lt;- hr_dataset %&gt;% 
   clean_names() %&gt;% 
   mutate(
@@ -125,18 +125,23 @@ glimpse(hr_dataset)</code></pre>
 ## $ years_at_company           &lt;dbl&gt; 6, 10, 0, 8, 2, 7, 1, 1, 9, 7, 5, 9, 5, ...
 ## $ years_since_last_promotion &lt;dbl&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, 1...</code></pre>
 <pre class="r"><code>employees_left &lt;- sum(hr_cleaned$attrition == &quot;Yes&quot;)
-employees_left</code></pre>
-<pre><code>## [1] 237</code></pre>
-<pre class="r"><code>total_employees &lt;- count(hr_cleaned)
-total_employees</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##       n
-##   &lt;int&gt;
-## 1  1470</code></pre>
-<pre class="r"><code>attrition_rate &lt;-  employees_left / total_employees * 100.0
-attrition_rate</code></pre>
-<pre><code>##      n
-## 1 16.1</code></pre>
+
+total_employees &lt;- count(hr_cleaned)
+
+attrition_rate &lt;-  employees_left / total_employees * 100.0
+knitr::kable(attrition_rate, col.names=c(&quot;Attrition rate&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Attrition rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">16.1</td>
+</tr>
+</tbody>
+</table>
 <ol start="2" style="list-style-type: decimal">
 <li>Distribution of various variables:</li>
 </ol>
@@ -144,7 +149,6 @@ attrition_rate</code></pre>
 <pre class="r"><code>cols &lt;- c(&#39;age&#39;, &#39;years_at_company&#39;, &#39;monthly_income&#39;, &#39;years_since_last_promotion&#39;)
 statistics &lt;- c(&#39;min&#39;, &#39;max&#39;, &#39;mean&#39;, &#39;median&#39;, &#39;sd&#39;)
 subset_data &lt;- hr_cleaned[, cols]
-
 
 summary_vals &lt;- subset_data %&gt;% summarise_each(funs(min))
 summary_vals &lt;- append(summary_vals, subset_data %&gt;% summarise_each(funs(max)))
@@ -204,4 +208,76 @@ knitr::kable(summary_matrix, digits=0, caption=&quot;Summary statistics of key v
 </tr>
 </tbody>
 </table>
+<ol start="3" style="list-style-type: decimal">
+<li>Monthly income and education</li>
+</ol>
+<pre class="r"><code>income_vs_education &lt;- hr_cleaned %&gt;% group_by(education) %&gt;%
+  summarise(min_income = min(monthly_income),
+            max_income = max(monthly_income),
+            mean_income = mean(monthly_income),
+            median_income = median(monthly_income))
+
+income_vs_education</code></pre>
+<pre><code>## # A tibble: 5 x 5
+##   education     min_income max_income mean_income median_income
+##   &lt;chr&gt;              &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Bachelor            1081      19926       6517.         4762 
+## 2 Below College       1009      19973       5641.         3849 
+## 3 College             1051      19613       6227.         4892.
+## 4 Doctor              2127      19586       8278.         6203 
+## 5 Master              1359      19999       6832.         5342.</code></pre>
+<pre class="r"><code>ggplot(hr_cleaned, aes(x=education, y=monthly_income)) +
+  geom_boxplot() +
+  labs(title = &quot;Relationship between Education and Monthly Income&quot;,
+       x = &quot;Education&quot;,
+       y = &quot;Monthly Income&quot;) + 
+  NULL</code></pre>
+<p><img src="index_files/figure-html/education-1.png" width="648" style="display: block; margin: auto;" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Monthly income and gender</li>
+</ol>
+<pre class="r"><code>ggplot(hr_cleaned, aes(x=gender, y=monthly_income)) +
+  geom_boxplot() +
+  labs(title = &quot;Relationship between Gender and Monthly Income&quot;,
+       x = &quot;Gender&quot;,
+       y = &quot;Monthly Income&quot;) + 
+  NULL</code></pre>
+<p><img src="index_files/figure-html/gender-1.png" width="648" style="display: block; margin: auto;" />
+There seems to be a slight relationship between education and monthly income as the higher the education level, the higher monthly income tends to be. However, the dataset does not seem to show any substantial relationship between gender and monthly income, with both male and female showing similar monthly income distribution.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Boxplot of income vs job role:</li>
+</ol>
+<pre class="r"><code>new_order &lt;- with(hr_cleaned, reorder(job_role, -monthly_income, median , na.rm=T))
+
+ggplot(hr_cleaned, aes(x=new_order, y=monthly_income)) +
+  geom_boxplot() +
+  labs(title = &quot;Relationship between Job Role and Monthly Income&quot;,
+       subtitle = &quot;(ordered based on median values of highest-paid job roles&quot;,
+       x = &quot;Job Role&quot;,
+       y = &quot;Monthly Income&quot;) + 
+  theme(axis.text.x = element_text(angle = 45 , vjust = 1, hjust=1)) + 
+  NULL</code></pre>
+<p><img src="index_files/figure-html/income_vs_job-1.png" width="648" style="display: block; margin: auto;" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li>Regression analysis</li>
+</ol>
+<pre class="r"><code>model1 &lt;- lm(monthly_income ~ job_role + education, data=hr_cleaned)
+model1 %&gt;% broom::tidy()</code></pre>
+<pre><code>## # A tibble: 13 x 5
+##    term                           estimate std.error statistic   p.value
+##    &lt;chr&gt;                             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 (Intercept)                      7635.       190.    40.2   1.52e-238
+##  2 job_roleHuman Resources         -3283.       332.    -9.88  2.51e- 22
+##  3 job_roleLaboratory Technician   -4275.       217.   -19.7   1.53e- 76
+##  4 job_roleManager                  9653.       267.    36.1   2.38e-204
+##  5 job_roleManufacturing Director   -219.       244.    -0.898 3.69e-  1
+##  6 job_roleResearch Director        8499.       288.    29.5   1.33e-150
+##  7 job_roleResearch Scientist      -4291.       213.   -20.2   7.50e- 80
+##  8 job_roleSales Executive          -600.       209.    -2.86  4.24e-  3
+##  9 job_roleSales Representative    -4875.       285.   -17.1   6.53e- 60
+## 10 educationBelow College           -256.       177.    -1.44  1.49e-  1
+## 11 educationCollege                 -321.       147.    -2.18  2.97e-  2
+## 12 educationDoctor                   -63.4      305.    -0.207 8.36e-  1
+## 13 educationMaster                   -70.3      132.    -0.530 5.96e-  1</code></pre>
+<p>A brief multivariate regression analysis shows that overall the job role is a significant predictor of the level of monthly income one is going to have, which is in line with the expectation. However, only the ‘college’ education variable seems to significantly correlate with the income as its p-value&lt;0.05. We can conclude that most income levels will be related to the job role more than the job type in this population sample.</p>
 </div>

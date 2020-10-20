@@ -8,7 +8,7 @@ draft: false
 image: promotion.jpg
 keywords: ""
 slug: Project3
-title: "Project IBM HR data"
+title: "IBM HR data"
 ---
 
 
@@ -52,9 +52,9 @@ library(formattable)
 library(tidyr)
 ```
 
-# On your own: IBM HR Analytics
+# IBM HR Analytics
 
-Loading the data
+Loading the data...
 
 ```{r, loading_hr_dataset}
 
@@ -63,8 +63,7 @@ glimpse(hr_dataset)
 
 ```
 
-
-Cleaning the data
+Cleaning the data...
 
 ```{r, cleaning_hr_dataset}
 
@@ -114,8 +113,6 @@ hr_cleaned <- hr_dataset %>%
 
 ```
 
-
-
 1. Attrition Rate of the company:
 
 ```{r, attrition_rate}
@@ -123,17 +120,13 @@ hr_cleaned <- hr_dataset %>%
 glimpse(hr_cleaned)
 
 employees_left <- sum(hr_cleaned$attrition == "Yes")
-employees_left
 
 total_employees <- count(hr_cleaned)
-total_employees
 
 attrition_rate <-  employees_left / total_employees * 100.0
-attrition_rate
+knitr::kable(attrition_rate, col.names=c("Attrition rate"))
 
 ```
-
-
 
 2. Distribution of various variables:
 
@@ -144,7 +137,6 @@ The age variable seems the closest to normal, with a mean and median value very 
 cols <- c('age', 'years_at_company', 'monthly_income', 'years_since_last_promotion')
 statistics <- c('min', 'max', 'mean', 'median', 'sd')
 subset_data <- hr_cleaned[, cols]
-
 
 summary_vals <- subset_data %>% summarise_each(funs(min))
 summary_vals <- append(summary_vals, subset_data %>% summarise_each(funs(max)))
@@ -157,3 +149,61 @@ summary_matrix <- matrix(summary_vals, nrow = 5, dimnames = list(statistics, col
 knitr::kable(summary_matrix, digits=0, caption="Summary statistics of key variables", align="rrrr", col.names=c("Age","Years at company","Monthly income","Years since last promotion"))
 
 ```
+
+3. Monthly income and education 
+
+```{r, education}
+
+income_vs_education <- hr_cleaned %>% group_by(education) %>%
+  summarise(min_income = min(monthly_income),
+            max_income = max(monthly_income),
+            mean_income = mean(monthly_income),
+            median_income = median(monthly_income))
+
+income_vs_education
+
+ggplot(hr_cleaned, aes(x=education, y=monthly_income)) +
+  geom_boxplot() +
+  labs(title = "Relationship between Education and Monthly Income",
+       x = "Education",
+       y = "Monthly Income") + 
+  NULL
+```
+
+4. Monthly income and gender
+```{r, gender}
+ggplot(hr_cleaned, aes(x=gender, y=monthly_income)) +
+  geom_boxplot() +
+  labs(title = "Relationship between Gender and Monthly Income",
+       x = "Gender",
+       y = "Monthly Income") + 
+  NULL
+```
+There seems to be a slight relationship between education and monthly income as the higher the education level, the higher monthly income tends to be. However, the dataset does not seem to show any substantial relationship between gender and monthly income, with both male and female showing similar monthly income distribution.
+
+5. Boxplot of income vs job role:
+
+```{r, income_vs_job}
+
+new_order <- with(hr_cleaned, reorder(job_role, -monthly_income, median , na.rm=T))
+
+ggplot(hr_cleaned, aes(x=new_order, y=monthly_income)) +
+  geom_boxplot() +
+  labs(title = "Relationship between Job Role and Monthly Income",
+       subtitle = "(ordered based on median values of highest-paid job roles",
+       x = "Job Role",
+       y = "Monthly Income") + 
+  theme(axis.text.x = element_text(angle = 45 , vjust = 1, hjust=1)) + 
+  NULL
+
+```
+
+6. Regression analysis
+```{r, regression}
+
+model1 <- lm(monthly_income ~ job_role + education, data=hr_cleaned)
+model1 %>% broom::tidy()
+
+```
+A brief multivariate regression analysis shows that overall the job role is a significant predictor of the level of monthly income one is going to have, which is in line with the expectation. However, only the 'college' education variable seems to significantly correlate with the income as its p-value<0.05. We can conclude that most income levels will be related to the job role more than the job type in this population sample.
+
