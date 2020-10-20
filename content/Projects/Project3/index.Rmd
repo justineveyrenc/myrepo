@@ -146,11 +146,11 @@ summary_vals <- append(summary_vals, subset_data %>% summarise_each(funs(sd)))
 
 summary_matrix <- matrix(summary_vals, nrow = 5, dimnames = list(statistics, cols), byrow = TRUE) 
   
-knitr::kable(summary_matrix, digits=0, caption="Summary statistics of key variables", align="rrrr", col.names=c("Age","Years at company","Monthly income","Years since last promotion"))
+knitr::kable(summary_matrix, digits=0, caption="Summary statistics of key variables", align="cccc", col.names=c("Age","Years at company","Monthly income","Years since last promotion"))
 
 ```
 
-3. Monthly income and education 
+3. Monthly income and education:
 
 ```{r, education}
 
@@ -170,7 +170,7 @@ ggplot(hr_cleaned, aes(x=education, y=monthly_income)) +
   NULL
 ```
 
-4. Monthly income and gender
+4. Monthly income and gender:
 ```{r, gender}
 ggplot(hr_cleaned, aes(x=gender, y=monthly_income)) +
   geom_boxplot() +
@@ -198,7 +198,7 @@ ggplot(hr_cleaned, aes(x=new_order, y=monthly_income)) +
 
 ```
 
-6. Regression analysis
+6. Regression analysis:
 ```{r, regression}
 
 model1 <- lm(monthly_income ~ job_role + education, data=hr_cleaned)
