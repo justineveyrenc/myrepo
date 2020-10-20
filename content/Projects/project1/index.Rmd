@@ -1,0 +1,119 @@
+---
+categories:
+- ""
+- ""
+date: "2020-10-17"
+description: Social_media
+draft: false
+image: social_media.jpg
+keywords: ""
+slug: Project1
+title: "Social media survey data"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+library(infer)
+library(ggplot2)
+library(ggrepel)
+```
+
+
+```{r, read_gss_data, cache=TRUE}
+
+gss <- read_csv(here::here("data", "smallgss2016.csv"), 
+                na = c("", "Don't know",
+                       "No answer", "Not applicable"))
+
+glimpse(gss)
+
+```
+
+
+## Instagram and Snapchat, by gender
+
+Estimating the *population* proportion of Snapchat or Instagram users in 2016:
+
+1. I first create a  new variable, `snap_insta` that is *Yes* if the respondent reported using any of Snapchat (`snapchat`) or Instagram (`instagrm`), and *No* if not. If the recorded value was NA for both of these questions, the value in this new variable is also NA.
+
+```{r, hours_spent_on_email_weekly}
+gss <- gss %>% mutate(snap_insta = case_when(
+  snapchat=="Yes"|instagrm=="Yes"~"Yes",
+  snapchat=="No"|instagrm=="No"~"No",
+  TRUE~"NA"))
+
+```
+
+2. I calculate the proportion of those who use either snapchat or instragram in the sample.
+
+```{r, snap_insta_proportion}
+
+gss_snap_insta_cleaned <- gss %>%
+  filter(snap_insta %in% c("Yes", "No")) %>% 
+  mutate(snap_insta_val = ifelse(snap_insta == "Yes", 1, 0))
+
+snap_insta_prop <-  gss_snap_insta_cleaned %>%
+  summarise(proportion=prop(snap_insta_val, success = 1))
+
+knitr::kable(snap_insta_prop, col.names=c("Proportion of respondents using both snap and insta"))
+```
+
+3. Constructing 95% CIs for men and women who used either Snapchat or Instagram
+
+```{r, CI_snap_insta }
+
+formula_ci <- gss_snap_insta_cleaned %>% group_by(sex) %>% 
+  summarise(mean_sip= mean(snap_insta_val, na.rm = TRUE),
+            sd_sip = sd(snap_insta_val, na.rm = TRUE),
+            count_sip = n()) %>%
+  mutate(se_sip = sd_sip / sqrt(count_sip),
+         lower_ci = mean_sip - qt(1 - (0.05 / 2), count_sip - 1) * se_sip,
+         upper_ci = mean_sip + qt(1 - (0.05 / 2), count_sip - 1) * se_sip)
+
+
+knitr::kable(formula_ci, digits=3, caption="Summary statistics for a 95% confidence interval", align="ccccccc", col.names=c("Gender","Average proportion","Standard deviation","Number of respondents", "Standard Error", "Lower confidence interval", "Upper confidence interval"))
+
+```
+The table above shows that females are more likely than men to use either snapchat or instagram, as confidence intervals do not overlap.
+4. Using the CI formula for proportions, I construct two 95% CIs for `bachelor_graduate` vs whether they use (Yes) and don't (No) use twitter. 
+
+```{r, twitter_bachelor_graduate}
+twitter_yes <- gss %>%
+  filter(bachelor_graduate=="Yes" & !twitter %in% "NA") %>%
+  mutate(twitter_val = ifelse(twitter == "Yes", 1, 0)) %>% 
+  summarise(mean_val= mean(twitter_val, na.rm=TRUE),
+            sd_val = sd(twitter_val, na.rm=TRUE),
+            count = n()) %>%
+  mutate(se = sd_val / sqrt(count),
+         lower_ci = mean_val - qt(1 - (0.05 / 2), count - 1) * se,
+         upper_ci = mean_val + qt(1 - (0.05 / 2), count - 1) * se)
+
+knitr::kable(twitter_yes, digits=3, caption="Summary statistics for a 95% confidence interval", align="cccccc", col.names=c("Mean","Standard deviation","Number of respondents", "Standard Error", "Lower confidence interval", "Upper confidence interval"))
+
+```
+In this sample of bachelors and graduates, the 95% confidence interval is very close to 0 indicating that it is very likely that respondents will not be using twitter.

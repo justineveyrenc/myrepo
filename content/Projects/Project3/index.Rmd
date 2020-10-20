@@ -8,7 +8,7 @@ draft: false
 image: promotion.jpg
 keywords: ""
 slug: Project3
-title: "IBM HR data"
+title: "IBM data"
 ---
 
 
@@ -52,7 +52,7 @@ library(formattable)
 library(tidyr)
 ```
 
-# IBM HR Analytics
+# Virtual HR Analysis
 
 Loading the data...
 
