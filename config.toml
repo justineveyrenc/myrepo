@@ -95,7 +95,7 @@ disqusShortname = ""
       title = "Social media"
       subtitle = "...and its increasing usage"
       image = "social_media.jpg"
-      url = "projects/project1"
+      url = "projects/projectx"
 
     [[params.tiles.showcase]]
       title = "Teenage health"
