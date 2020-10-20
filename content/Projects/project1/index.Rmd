@@ -7,7 +7,7 @@ description: Social_media
 draft: false
 image: social_media.jpg
 keywords: ""
-slug: Project1
+slug: project1
 title: "Social media survey data"
 ---
 
@@ -55,7 +55,7 @@ glimpse(gss)
 ```
 
 
-## Instagram and Snapchat, by gender
+## Instagram, Snapchat and Twitter
 
 Estimating the *population* proportion of Snapchat or Instagram users in 2016:
 
@@ -100,6 +100,7 @@ knitr::kable(formula_ci, digits=3, caption="Summary statistics for a 95% confide
 
 ```
 The table above shows that females are more likely than men to use either snapchat or instagram, as confidence intervals do not overlap.
+
 4. Using the CI formula for proportions, I construct two 95% CIs for `bachelor_graduate` vs whether they use (Yes) and don't (No) use twitter. 
 
 ```{r, twitter_bachelor_graduate}
